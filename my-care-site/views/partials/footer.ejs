@@ -1,0 +1,114 @@
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <!-- Brand / About -->
+    <section class="footer-col about">
+      <div class="brand">
+        <img
+          src="<%= (siteContent.footer?.brand?.logo?.src) || '/images/MediumSquareLogo.png' %>"
+          alt="<%= (siteContent.footer?.brand?.logo?.alt) || '' %>"
+          width="28" height="28" />
+        <span><%= (siteContent.footer?.brand?.name) || 'Children To Prosper' %></span>
+      </div>
+      <p>
+        <%= (siteContent.footer?.aboutText) || 'Compassionate, person-centred care across our local community.' %>
+      </p>
+    </section>
+
+    <!-- Quick Links (compact) - stays STATIC by request -->
+    <nav class="footer-col links" aria-label="Footer quick links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/about">About</a></li>
+        <li><a href="/services">Services</a></li>
+        <li><a href="/careers">Careers</a></li>
+        <li><a href="/contact">Contact</a></li>
+        <li><a href="/privacy">Privacy</a></li>
+        <li><a href="/cookie">Cookie Policy</a></li>
+      </ul>
+    </nav>
+
+    <!-- Contact -->
+    <section class="footer-col contact">
+      <h3>Contact</h3>
+      <ul class="contact-list">
+        <% if (siteContent.footer?.contact?.address) { %>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>
+            <%= siteContent.footer.contact.address %>
+          </li>
+        <% } else { %>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7Zm0 9.5A2.5 2.5 0 1 1 12 6a2.5 2.5 0 0 1 0 5.5Z"/></svg>
+            123 Care Street, London
+          </li>
+        <% } %>
+
+        <% if (siteContent.footer?.contact?.phone) { %>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.36 2.3.55 3.6.55a1 1 0 0 1 1 1V21a1 1 0 0 1-1 1C10.3 22 2 13.7 2 3a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.5 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z"/></svg>
+            <%= siteContent.footer.contact.phone %>
+          </li>
+        <% } else { %>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8a15 15 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25c1.1.36 2.3.55 3.6.55a1 1 0 0 1 1 1V21a1 1 0 0 1-1 1C10.3 22 2 13.7 2 3a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.3.2 2.5.5 3.6a1 1 0 0 1-.25 1l-2.2 2.2Z"/></svg>
+            020 0000 0000
+          </li>
+        <% } %>
+
+        <% if (siteContent.footer?.contact?.email) { %>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v.2l10 6.3L22 6.2V6a2 2 0 0 0-2-2Zm0 4.3-8 5-8-5V18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.3Z"/></svg>
+            <a href="mailto:<%= siteContent.footer.contact.email %>"><%= siteContent.footer.contact.email %></a>
+          </li>
+        <% } else { %>
+          <li>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v.2l10 6.3L22 6.2V6a2 2 0 0 0-2-2Zm0 4.3-8 5-8-5V18a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8.3Z"/></svg>
+            <a href="mailto:hello@mycaresite.example">hello@mycaresite.example</a>
+          </li>
+        <% } %>
+      </ul>
+    </section>
+  </div>
+
+  <div class="footer-bottom">
+    <p>
+      <%
+        const defaultLegal = '© {year} My Care Site. All rights reserved.';
+        const legal = (siteContent.footer?.legalText) || defaultLegal;
+        const resolved = legal.replace('{year}', new Date().getFullYear());
+      %>
+      <%= resolved %>
+    </p>
+    <div class="legal-links">
+      <a href="/privacy">Privacy</a>
+      <span aria-hidden="true">•</span>
+      <a href="/cookie">Cookie Policy</a>
+    </div>
+  </div>
+
+  <!-- Cookie Consent Banner -->
+  <div class="cookie-consent" id="cookieConsent" role="dialog" aria-live="polite" aria-label="Cookie notice">
+    <span>
+      <%- (siteContent.footer?.cookie?.text) || 'We use cookies to improve your experience. See our <a href="/cookie">Cookie Policy</a>.' %>
+    </span>
+    <button id="acceptCookies" type="button"><%= (siteContent.footer?.cookie?.acceptLabel) || 'Accept' %></button>
+  </div>
+
+  <script>
+    (function(){
+      var banner = document.getElementById('cookieConsent');
+      var btn = document.getElementById('acceptCookies');
+      if (!banner || !btn) return;
+      if (localStorage.getItem('cookiesAccepted') === 'true') {
+        banner.style.display = 'none';
+      } else {
+        banner.style.display = 'block';
+      }
+      btn.addEventListener('click', function(){
+        localStorage.setItem('cookiesAccepted', 'true');
+        banner.style.display = 'none';
+      });
+    })();
+  </script>
+</footer>

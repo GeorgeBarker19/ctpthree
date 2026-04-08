@@ -1,0 +1,165 @@
+{
+  "home": {
+    "sections": [
+      {
+        "title": "Welcome...",
+        "text": "To the care service that CARES",
+        "image": "/uploads/1762566636382-355255.jpg",
+        "buttonText": "About us",
+        "buttonLink": "/about",
+        "fontSize": "large"
+      },
+      {
+        "title": "sfddfgsdsg",
+        "text": "Test",
+        "image": "/uploads/1762949831858-365492.png",
+        "buttonText": "Our services",
+        "buttonLink": "/services",
+        "fontSize": "large"
+      },
+      {
+        "title": "Fancy a rewarding career?",
+        "text": "JOIN US!",
+        "image": "/uploads/1762567000572-890666.jpg",
+        "buttonText": "Careers",
+        "buttonLink": "/careers",
+        "fontSize": "large"
+      },
+      {
+        "title": "Got any questions?",
+        "text": "Pop us a message!",
+        "image": "/uploads/1762943564856-62971.png",
+        "buttonText": "Contact Us!",
+        "buttonLink": "/contact",
+        "fontSize": "large"
+      }
+    ]
+  },
+  "about": {
+    "seoTitle": "This is the about page",
+    "title": "ABOUT?",
+    "subtitle": "Yes, about.",
+    "mission": {
+      "title": "Our Mission is our passion",
+      "bodyHtml": "",
+      "image": {
+        "src": "/uploads/1762567175861-134707.jpg",
+        "alt": "Take a look at this guy"
+      },
+      "cta": {
+        "text": "Take a look at our houses",
+        "href": "/services"
+      },
+      "body": "Our goal is to help every child have the ability to prosper"
+    },
+    "staff": {
+      "title": "Our staff",
+      "bodyHtml": "",
+      "image": {
+        "src": "/uploads/1762945052529-977796.jpg",
+        "alt": "Our staff team"
+      },
+      "cta": {
+        "text": "Careers",
+        "href": "/careers"
+      },
+      "body": "Theyre pretty cool, forget MR. T, these are the real A-Team"
+    },
+    "body": "Good to know.",
+    "bodyHtml": "",
+    "fontSize": "large",
+    "sideImage": {
+      "alt": "test",
+      "src": "/uploads/1762563573266-65337.png"
+    },
+    "gallery": [
+      {
+        "src": "/uploads/1762561405209-768247.png",
+        "alt": "placeholder",
+        "caption": "placeholder"
+      },
+      {
+        "src": "",
+        "alt": "placeholder",
+        "caption": "placeholder"
+      }
+    ]
+  },
+  "careers": {
+    "title": "Join Our Team",
+    "text": "We’re always looking for passionate and caring professionals.",
+    "fontSize": "small"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "text": "We’d love to hear from you. Reach out anytime.",
+    "fontSize": "normal"
+  },
+  "services": {
+    "title": "Here you will find our services.",
+    "text": "test",
+    "fontSize": "normal",
+    "gallery": [
+      {
+        "title": "Blossom Cottage",
+        "teaser": "EBD Service",
+        "description": "This is blossom",
+        "image": "/uploads/1762944051404-330951.png",
+        "alt": "Blossom Cottage",
+        "pdf": "/docs/1762944053200-476332.docx"
+      },
+      {
+        "title": "Dilly House",
+        "teaser": "EBD Service",
+        "description": "Placeholder text",
+        "image": "/uploads/1762944143737-959529.png",
+        "alt": "Dilly",
+        "pdf": "/docs/1762944150416-923216.docx"
+      },
+      {
+        "title": "Huckleberry House",
+        "teaser": "Autism Specific Service",
+        "description": "Huckle and chuckle",
+        "image": "/uploads/1762945010816-740232.jpg",
+        "alt": "Huckleberry House",
+        "pdf": ""
+      },
+      {
+        "title": "Blueberry House",
+        "teaser": "Autism Specific Service",
+        "description": "Im blue da ba dee da ba die",
+        "image": "/uploads/1762945026331-787415.jpg",
+        "alt": "Blueberry House",
+        "pdf": "/docs/1762944416368-655407.docx"
+      },
+      {
+        "title": "New services yet to come....",
+        "teaser": "EXCITING EH?",
+        "description": "New houses",
+        "image": "/uploads/1762945035424-323360.png",
+        "alt": "NEW",
+        "pdf": ""
+      }
+    ]
+  },
+  "footer": {
+    "brand": {
+      "name": "Children To Prosper",
+      "logo": {
+        "src": "/uploads/1762566872223-768112.png",
+        "alt": "Children To Prosper"
+      }
+    },
+    "aboutText": "A business that caters to your needs.",
+    "contact": {
+      "address": "The Offices, Sharpenhoe Bury, Sharpenhoe, Bedford, MK45 4SG",
+      "phone": "0800 00 1066",
+      "email": "ctpcarecontact@gmail.com"
+    },
+    "legalText": "Registered trademark 2020",
+    "cookie": {
+      "text": "We use cookies to improve your experience. See our <a href=\"/cookie\">Cookie Policy</a>.",
+      "acceptLabel": "Accept"
+    }
+  }
+}

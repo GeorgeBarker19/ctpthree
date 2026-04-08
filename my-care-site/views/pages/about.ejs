@@ -1,0 +1,69 @@
+<%- include('../partials/header', { page: 'page-about', title: (content?.seoTitle || 'About — Children To Prosper') }) %>
+
+<main id="main" tabindex="-1">
+
+  <!-- Intro -->
+  <section class="about-hero">
+    <h1><%= content?.title || 'About Children To Prosper' %></h1>
+    <% if (content?.subtitle) { %>
+      <p><%= content.subtitle %></p>
+    <% } %>
+  </section>
+
+  <!-- Mission -->
+  <section class="about-slab">
+    <figure class="slab-media">
+      <img
+        src="<%= content?.mission?.image?.src || '/images/about-mission.jpg' %>"
+        alt="<%= content?.mission?.image?.alt || 'Illustration representing our mission' %>"
+        loading="lazy" decoding="async">
+    </figure>
+
+    <article class="slab-copy">
+      <span class="slab-eyebrow">Our Mission</span>
+      <h2><%= content?.mission?.title || 'Every child, the chance to prosper.' %></h2>
+
+      <% if (content?.mission?.bodyHtml) { %>
+        <div class="slab-body"><%- content.mission.bodyHtml %></div>
+      <% } else { %>
+        <p class="slab-body">
+          <%= content?.mission?.body || 'We champion compassionate, accessible care that empowers every child and family to thrive.' %>
+        </p>
+      <% } %>
+
+      <% if (content?.mission?.cta?.text && content?.mission?.cta?.href) { %>
+        <a class="slab-cta btn--orange" href="<%= content.mission.cta.href %>"><%= content.mission.cta.text %></a>
+      <% } %>
+    </article>
+  </section>
+
+  <!-- Staff (alternating layout) -->
+  <section class="about-slab slab--reverse">
+    <figure class="slab-media">
+      <img
+        src="<%= content?.staff?.image?.src || '/images/about-staff.jpg' %>"
+        alt="<%= content?.staff?.image?.alt || 'Our staff team' %>"
+        loading="lazy" decoding="async">
+    </figure>
+
+    <article class="slab-copy">
+      <span class="slab-eyebrow">Our Staff</span>
+      <h2><%= content?.staff?.title || 'Compassion in action.' %></h2>
+
+      <% if (content?.staff?.bodyHtml) { %>
+        <div class="slab-body"><%- content.staff.bodyHtml %></div>
+      <% } else { %>
+        <p class="slab-body">
+          <%= content?.staff?.body || 'Experienced professionals, unified by a commitment to dignity, safety, and continuous support.' %>
+        </p>
+      <% } %>
+
+      <% if (content?.staff?.cta?.text && content?.staff?.cta?.href) { %>
+        <a class="slab-cta btn--pink" href="<%= content.staff.cta.href %>"><%= content.staff.cta.text %></a>
+      <% } %>
+    </article>
+  </section>
+
+</main>
+
+<%- include('../partials/footer') %>

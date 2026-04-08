@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title><%= typeof title !== 'undefined' ? title : 'My Care Site' %></title>
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="icon" href="/images/favicon.ico" sizes="any">
+  <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+</head>
+<body class="<%= typeof page !== 'undefined' ? page : '' %>">
+  <header class="site-header" role="banner">
+    <%- include('./nav', { page: (typeof page !== 'undefined' ? page : '') }) %>
+  </header>

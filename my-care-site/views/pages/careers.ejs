@@ -1,0 +1,61 @@
+<%- include('../partials/header') %>
+
+<main>
+  <section data-aos="fade-up">
+    <h1>Join Our Team</h1>
+
+    <div id="formMessage"></div>
+
+    <form id="careerForm" enctype="multipart/form-data">
+      <label for="name">Full Name:</label>
+      <input type="text" id="name" name="name" required placeholder="Your Name">
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required placeholder="your@email.com">
+
+      <label for="message">Cover Letter / Message:</label>
+      <textarea id="message" name="message" required placeholder="Write your message here..." rows="5"></textarea>
+
+      <label for="attachment">Upload Resume (PDF/DOCX, max 5MB):</label>
+      <input type="file" id="attachment" name="attachment" accept=".pdf,.docx" required>
+
+      <button type="submit">Submit Application</button>
+    </form>
+  </section>
+</main>
+
+<%- include('../partials/footer') %>
+
+<script>
+  const form = document.getElementById('careerForm');
+  const formMessage = document.getElementById('formMessage');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    formMessage.textContent = '';
+    formMessage.className = '';
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch('/careers', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        formMessage.textContent = result.message;
+        formMessage.className = 'success animate-message';
+        form.reset();
+      } else {
+        formMessage.textContent = result.error || 'Something went wrong.';
+        formMessage.className = 'error animate-message';
+      }
+    } catch (err) {
+      formMessage.textContent = 'Error sending application.';
+      formMessage.className = 'error animate-message';
+    }
+  });
+</script>

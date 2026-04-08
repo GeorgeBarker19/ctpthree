@@ -1,0 +1,73 @@
+<%- include('../partials/header') %>
+
+<main class="font-<%= content.fontSize || 'normal' %>">
+
+  <!-- Services Gallery -->
+  <section class="services-gallery" aria-label="Services gallery">
+    <div class="gallery-header">
+      <h2>Our Services</h2>
+      <div class="gallery-controls">
+        <button class="gallery-btn prev" aria-label="Previous slide" id="galleryPrev" type="button">‹</button>
+        <button class="gallery-btn next" aria-label="Next slide" id="galleryNext" type="button">›</button>
+      </div>
+    </div>
+
+    <div class="gallery-viewport" id="galleryViewport">
+      <div class="gallery-track" id="galleryTrack">
+        <% if (content.gallery && content.gallery.length) { %>
+          <% content.gallery.forEach(function(item, i){ %>
+            <article class="gallery-card"
+              tabindex="0"
+              role="button"
+              aria-label="View details for <%= item.title %>"
+              data-title="<%= item.title %>"
+              data-description="<%- (item.description || '').replace(/"/g, '&quot;') %>"
+              data-image="<%= item.image %>"
+              data-pdf="<%= item.pdf || '' %>">
+              <figure>
+                <img src="<%= item.image %>" alt="<%= item.alt || item.title %>" loading="lazy" />
+                <figcaption>
+                  <h3><%= item.title %></h3>
+                  <% if (item.teaser) { %><p><%= item.teaser %></p><% } %>
+                </figcaption>
+              </figure>
+            </article>
+          <% }) %>
+        <% } else { %>
+          <!-- Fallback if no items yet -->
+          <article class="gallery-card placeholder">
+            <figure>
+              <img src="/images/home.jpg" alt="Placeholder service" />
+              <figcaption>
+                <h3>Example Service</h3>
+                <p>Add gallery items in your admin/content config.</p>
+              </figcaption>
+            </figure>
+          </article>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="serviceModal" aria-hidden="true">
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="serviceModalTitle">
+      <button class="modal-close" id="modalClose" aria-label="Close dialog">×</button>
+
+      <div class="modal-media">
+        <img id="modalImage" alt="" />
+      </div>
+
+      <div class="modal-content">
+        <h2 id="serviceModalTitle"></h2>
+        <p id="serviceModalDesc"></p>
+        <a id="serviceModalDownload" class="download-btn" href="#" download>Download PDF</a>
+      </div>
+    </div>
+  </div>
+</main>
+
+<%- include('../partials/footer') %>
+
+<!-- Scripts specific to services page -->
+<script src="/js/services-gallery.js"></script>

@@ -1,0 +1,513 @@
+<%- include('../partials/header') %>
+<link rel="stylesheet" href="/css/admin.css?v=1">
+
+<main class="admin-dashboard">
+  <h1>🛠️ Admin Dashboard</h1>
+
+  <% if (savedMessage) { %>
+    <div class="save-banner"><%= savedMessage %></div>
+  <% } %>
+
+  <form id="contentForm" method="POST" action="/admin/update-content">
+    <!-- ---------- HOME ---------- -->
+    <h2>🏠 Home Page Sections</h2>
+
+    <div id="home-sections">
+      <% if (content.home && content.home.sections) { %>
+        <% content.home.sections.forEach(function(section, i) { %>
+          <fieldset class="section-block" data-type="home-section" data-index="<%= i %>">
+            <legend>Section <%= i + 1 %></legend>
+
+            <label>Title</label>
+            <input type="text" name="home[sections][<%= i %>][title]" value="<%- section.title || '' %>">
+
+            <label>Text</label>
+            <textarea name="home[sections][<%= i %>][text]"><%- section.text || '' %></textarea>
+
+            <label>Background Image</label>
+            <div class="image-upload">
+              <img src="<%= section.image || '' %>" alt="Section Image" class="preview-img" id="home-preview-<%= i %>">
+              <input type="hidden" name="home[sections][<%= i %>][image]" id="home-image-path-<%= i %>" value="<%- section.image || '' %>">
+              <input type="file" class="file-input" data-scope="home" data-index="<%= i %>" accept="image/*">
+              <button type="button" class="upload-btn" data-scope="home" data-index="<%= i %>">Upload</button>
+            </div>
+
+            <label>Button Text</label>
+            <input type="text" name="home[sections][<%= i %>][buttonText]" value="<%- section.buttonText || '' %>">
+
+            <label>Button Link</label>
+            <input type="text" name="home[sections][<%= i %>][buttonLink]" value="<%- section.buttonLink || '' %>">
+
+            <label>Font Size</label>
+            <select name="home[sections][<%= i %>][fontSize]">
+              <option value="small" <%= section.fontSize === 'small' ? 'selected' : '' %>>Small</option>
+              <option value="normal" <%= section.fontSize === 'normal' ? 'selected' : '' %>>Normal</option>
+              <option value="large" <%= section.fontSize === 'large' ? 'selected' : '' %>>Large</option>
+            </select>
+
+            <button type="button" class="remove-block" data-action="remove-home" data-index="<%= i %>">Remove Section</button>
+          </fieldset>
+        <% }) %>
+      <% } %>
+    </div>
+
+    <button type="button" id="add-home-section" class="upload-btn">+ Add Home Section</button>
+
+    <hr class="brand">
+
+    <!-- ---------- ABOUT ---------- -->
+    <h2>ℹ️ About Page</h2>
+
+    <fieldset class="section-block">
+      <legend>About — Text</legend>
+
+      <label>SEO Title</label>
+      <input type="text" name="about[seoTitle]" value="<%- (content.about && content.about.seoTitle) || '' %>">
+
+      <label>Title</label>
+      <input type="text" name="about[title]" value="<%- (content.about && content.about.title) || '' %>">
+
+      <label>Subtitle</label>
+      <input type="text" name="about[subtitle]" value="<%- (content.about && content.about.subtitle) || '' %>">
+
+      <label>Body (plain text)</label>
+      <textarea name="about[body]"><%- (content.about && content.about.body) || '' %></textarea>
+
+      <label>Body (HTML — optional)</label>
+      <textarea name="about[bodyHtml]"><%- (content.about && content.about.bodyHtml) || '' %></textarea>
+
+      <label>Font Size</label>
+      <select name="about[fontSize]">
+        <% const aSize = (content.about && content.about.fontSize) || 'normal'; %>
+        <option value="small" <%= aSize==='small' ? 'selected' : '' %>>Small</option>
+        <option value="normal" <%= aSize==='normal' ? 'selected' : '' %>>Normal</option>
+        <option value="large" <%= aSize==='large' ? 'selected' : '' %>>Large</option>
+      </select>
+    </fieldset>
+
+    <!-- About — Mission -->
+    <fieldset class="section-block">
+      <legend>About — Mission</legend>
+      <% const mission = (content.about && content.about.mission) || {}; %>
+
+      <label>Mission Title</label>
+      <input type="text" name="about[mission][title]" value="<%- mission.title || '' %>">
+
+      <label>Mission Body (plain text)</label>
+      <textarea name="about[mission][body]"><%- mission.body || '' %></textarea>
+
+      <label>Mission Body (HTML — optional)</label>
+      <textarea name="about[mission][bodyHtml]"><%- mission.bodyHtml || '' %></textarea>
+
+      <div class="grid-2">
+        <div>
+          <label>CTA Text</label>
+          <input type="text" name="about[mission][cta][text]" value="<%- mission.cta?.text || '' %>">
+        </div>
+        <div>
+          <label>CTA Link</label>
+          <input type="text" name="about[mission][cta][href]" value="<%- mission.cta?.href || '' %>">
+        </div>
+      </div>
+
+      <div class="image-upload">
+        <label>Mission Image</label>
+        <img src="<%- mission.image?.src || '/images/about-mission.jpg' %>" class="preview-img" id="about-mission-preview" alt="">
+        <input type="hidden" name="about[mission][image][src]" id="about-mission-path" value="<%- mission.image?.src || '/images/about-mission.jpg' %>">
+        <input type="text" name="about[mission][image][alt]" value="<%- mission.image?.alt || 'Illustration representing our mission' %>" placeholder="Alt text">
+        <input type="file" class="file-input" data-scope="about-mission" accept="image/*">
+        <button type="button" class="upload-btn" data-scope="about-mission">Upload Mission Image</button>
+      </div>
+    </fieldset>
+
+    <!-- About — Staff -->
+    <fieldset class="section-block">
+      <legend>About — Staff</legend>
+      <% const staff = (content.about && content.about.staff) || {}; %>
+
+      <label>Staff Title</label>
+      <input type="text" name="about[staff][title]" value="<%- staff.title || '' %>">
+
+      <label>Staff Body (plain text)</label>
+      <textarea name="about[staff][body]"><%- staff.body || '' %></textarea>
+
+      <label>Staff Body (HTML — optional)</label>
+      <textarea name="about[staff][bodyHtml]"><%- staff.bodyHtml || '' %></textarea>
+
+      <div class="grid-2">
+        <div>
+          <label>CTA Text</label>
+          <input type="text" name="about[staff][cta][text]" value="<%- staff.cta?.text || '' %>">
+        </div>
+        <div>
+          <label>CTA Link</label>
+          <input type="text" name="about[staff][cta][href]" value="<%- staff.cta?.href || '' %>">
+        </div>
+      </div>
+
+      <div class="image-upload">
+        <label>Staff Image</label>
+        <img src="<%- staff.image?.src || '/images/about-staff.jpg' %>" class="preview-img" id="about-staff-preview" alt="">
+        <input type="hidden" name="about[staff][image][src]" id="about-staff-path" value="<%- staff.image?.src || '/images/about-staff.jpg' %>">
+        <input type="text" name="about[staff][image][alt]" value="<%- staff.image?.alt || 'Our staff team' %>" placeholder="Alt text">
+        <input type="file" class="file-input" data-scope="about-staff" accept="image/*">
+        <button type="button" class="upload-btn" data-scope="about-staff">Upload Staff Image</button>
+      </div>
+    </fieldset>
+
+    <hr class="brand">
+
+    <!-- ---------- SERVICES ---------- -->
+    <h2>🧩 Services</h2>
+    <fieldset class="section-block">
+      <legend>Services — Intro</legend>
+      <label>Title</label>
+      <input type="text" name="services[title]" value="<%- (content.services && content.services.title) || '' %>">
+      <label>Text</label>
+      <textarea name="services[text]"><%- (content.services && content.services.text) || '' %></textarea>
+      <label>Font Size</label>
+      <select name="services[fontSize]">
+        <% const sSize = (content.services && content.services.fontSize) || 'normal'; %>
+        <option value="small" <%= sSize==='small' ? 'selected' : '' %>>Small</option>
+        <option value="normal" <%= sSize==='normal' ? 'selected' : '' %>>Normal</option>
+        <option value="large" <%= sSize==='large' ? 'selected' : '' %>>Large</option>
+      </select>
+    </fieldset>
+
+    <fieldset class="section-block">
+      <legend>Services — Gallery</legend>
+      <div id="services-gallery">
+        <% const gallery = (content.services && content.services.gallery) || []; %>
+        <% gallery.forEach(function(svc, i){ %>
+          <div class="service-item" data-scope="services" data-index="<%= i %>">
+            <label>Title</label>
+            <input type="text" name="services[gallery][<%= i %>][title]" value="<%- svc.title || '' %>">
+
+            <label>Teaser</label>
+            <input type="text" name="services[gallery][<%= i %>][teaser]" value="<%- svc.teaser || '' %>">
+
+            <label>Description</label>
+            <textarea name="services[gallery][<%= i %>][description]"><%- svc.description || '' %></textarea>
+
+            <label>Image Alt</label>
+            <input type="text" name="services[gallery][<%= i %>][alt]" value="<%- svc.alt || '' %>">
+
+            <div class="image-upload">
+              <img src="<%- svc.image || '' %>" class="preview-img" id="services-preview-<%= i %>" alt="">
+              <input type="hidden" name="services[gallery][<%= i %>][image]" id="services-image-path-<%= i %>" value="<%- svc.image || '' %>">
+              <input type="file" class="file-input" data-scope="services-image" data-index="<%= i %>" accept="image/*">
+              <button type="button" class="upload-btn" data-scope="services-image" data-index="<%= i %>">Upload Image</button>
+            </div>
+
+            <div class="file-upload">
+              <label>PDF/DOCX</label>
+              <input type="text" name="services[gallery][<%= i %>][pdf]" id="services-doc-path-<%= i %>" value="<%- svc.pdf || '' %>" placeholder="/docs/filename.pdf">
+              <input type="file" class="doc-input" data-scope="services-doc" data-index="<%= i %>" accept=".pdf,.doc,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+              <button type="button" class="upload-btn" data-scope="services-doc" data-index="<%= i %>">Upload Doc</button>
+            </div>
+
+            <button type="button" class="remove-block" data-action="remove-service" data-index="<%= i %>">Remove Service</button>
+            <hr>
+          </div>
+        <% }) %>
+      </div>
+      <button type="button" id="add-service" class="upload-btn">+ Add Service</button>
+    </fieldset>
+
+    <hr class="brand">
+
+    <!-- ---------- CONTACT/CAREERS (brief) ---------- -->
+    <h2>📨 Contact & Careers</h2>
+
+    <fieldset class="section-block">
+      <legend>Contact</legend>
+      <label>Title</label>
+      <input type="text" name="contact[title]" value="<%- (content.contact && content.contact.title) || '' %>">
+      <label>Text</label>
+      <textarea name="contact[text]"><%- (content.contact && content.contact.text) || '' %></textarea>
+      <label>Font Size</label>
+      <select name="contact[fontSize]">
+        <% const cSize = (content.contact && content.contact.fontSize) || 'normal'; %>
+        <option value="small" <%= cSize==='small' ? 'selected' : '' %>>Small</option>
+        <option value="normal" <%= cSize==='normal' ? 'selected' : '' %>>Normal</option>
+        <option value="large" <%= cSize==='large' ? 'selected' : '' %>>Large</option>
+      </select>
+    </fieldset>
+
+    <!-- ---------- FOOTER ---------- -->
+    <h2>🔻 Footer</h2>
+    <fieldset class="section-block">
+      <legend>Footer — Content</legend>
+
+      <% const footer = content.footer || {}; %>
+
+      <div class="grid-2">
+        <div>
+          <label>Brand Name</label>
+          <input type="text" name="footer[brand][name]" value="<%- footer.brand?.name || 'Children To Prosper' %>">
+        </div>
+        <div>
+          <label>Logo Alt</label>
+          <input type="text" name="footer[brand][logo][alt]" value="<%- footer.brand?.logo?.alt || '' %>">
+        </div>
+      </div>
+
+      <div class="image-upload">
+        <label>Brand Logo</label>
+        <img src="<%- footer.brand?.logo?.src || '/images/MediumSquareLogo.png' %>" class="preview-img" id="footer-logo-preview" alt="">
+        <input type="hidden" name="footer[brand][logo][src]" id="footer-logo-path" value="<%- footer.brand?.logo?.src || '/images/MediumSquareLogo.png' %>">
+        <input type="file" class="file-input" data-scope="footer-logo" accept="image/*">
+        <button type="button" class="upload-btn" data-scope="footer-logo">Upload Logo</button>
+      </div>
+
+      <label>About Text (short blurb)</label>
+      <textarea name="footer[aboutText]"><%- footer.aboutText || 'Compassionate, person-centred care across our local community.' %></textarea>
+
+      <div class="grid-3">
+        <div>
+          <label>Address</label>
+          <input type="text" name="footer[contact][address]" value="<%- footer.contact?.address || '' %>">
+        </div>
+        <div>
+          <label>Phone</label>
+          <input type="text" name="footer[contact][phone]" value="<%- footer.contact?.phone || '' %>">
+        </div>
+        <div>
+          <label>Email</label>
+          <input type="email" name="footer[contact][email]" value="<%- footer.contact?.email || '' %>">
+        </div>
+      </div>
+
+      <label>Legal Line (supports {year})</label>
+      <input type="text" name="footer[legalText]" value="<%- footer.legalText || '© {year} My Care Site. All rights reserved.' %>">
+
+      <fieldset class="section-block" style="margin-top:1rem">
+        <legend>Cookie Banner</legend>
+        <label>Banner Text (HTML allowed)</label>
+        <textarea name="footer[cookie][text]"><%- footer.cookie?.text || 'We use cookies to improve your experience. See our <a href=\"/cookie\">Cookie Policy</a>.' %></textarea>
+        <label>Accept Button Label</label>
+        <input type="text" name="footer[cookie][acceptLabel]" value="<%- footer.cookie?.acceptLabel || 'Accept' %>">
+      </fieldset>
+    </fieldset>
+
+    <fieldset class="section-block">
+      <legend>Careers</legend>
+      <label>Title</label>
+      <input type="text" name="careers[title]" value="<%- (content.careers && content.careers.title) || '' %>">
+      <label>Text</label>
+      <textarea name="careers[text]"><%- (content.careers && content.careers.text) || '' %></textarea>
+      <label>Font Size</label>
+      <select name="careers[fontSize]">
+        <% const crSize = (content.careers && content.careers.fontSize) || 'normal'; %>
+        <option value="small" <%= crSize==='small' ? 'selected' : '' %>>Small</option>
+        <option value="normal" <%= crSize==='normal' ? 'selected' : '' %>>Normal</option>
+        <option value="large" <%= crSize==='large' ? 'selected' : '' %>>Large</option>
+      </select>
+    </fieldset>
+
+    <button type="submit" class="save-btn">💾 Save Changes</button>
+  </form>
+
+  <!-- ===== Password Change ===== -->
+  <form id="passwordForm" method="POST" action="/admin/change-password" class="section-block" style="margin-top:1.5rem">
+    <h2>🔒 Change Admin Password</h2>
+    <label>Current Password</label>
+    <input type="password" name="currentPassword" required>
+    <label>New Password</label>
+    <input type="password" name="newPassword" minlength="6" required>
+    <label>Confirm New Password</label>
+    <input type="password" name="confirmPassword" minlength="6" required>
+    <button type="submit" class="save-btn">Update Password</button>
+  </form>
+
+  <form method="POST" action="/admin/clear-unused" onsubmit="return confirm('Delete all unused uploads?');" style="margin-top:1rem">
+    <button type="submit" class="clear-btn">🧹 Clear Unused Uploads</button>
+  </form>
+</main>
+
+<script>
+  // ---------- Helpers ----------
+  const byQS = (sel, root=document) => root.querySelector(sel);
+
+  // Send cookies + declare JSON expectation so middleware returns JSON on 401
+  async function uploadTo(endpoint, file) {
+    const fd = new FormData();
+    fd.append('file', file);
+
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      body: fd,
+      credentials: 'same-origin',
+      headers: { 'Accept': 'application/json' }
+    });
+
+    const raw = await res.text();
+    let data;
+    try { data = JSON.parse(raw); } catch (e) {
+      const snippet = raw.replace(/\s+/g, ' ').slice(0, 160);
+      throw new Error(snippet || `Upload failed (${res.status})`);
+    }
+    if (!res.ok || !data.success) {
+      throw new Error(data.error || 'Upload failed');
+    }
+    return data.path;
+  }
+
+  // ---------- Image/Doc Upload Buttons ----------
+  document.addEventListener('click', async (e) => {
+    const btn = e.target.closest('.upload-btn');
+    if (!btn) return;
+
+    const scope = btn.getAttribute('data-scope');
+    const index = btn.getAttribute('data-index');
+
+    try {
+      if (scope === 'home') {
+        const input = byQS('.file-input[data-scope="home"][data-index="'+index+'"]');
+        if (!input || !input.files[0]) return alert('Choose an image first');
+        const path = await uploadTo('/admin/upload-image', input.files[0]);
+        byQS('#home-preview-'+index).src = path;
+        byQS('#home-image-path-'+index).value = path;
+      }
+      else if (scope === 'services-image') {
+        const input = byQS('.file-input[data-scope="services-image"][data-index="'+index+'"]');
+        if (!input || !input.files[0]) return alert('Choose an image first');
+        const path = await uploadTo('/admin/upload-image', input.files[0]);
+        byQS('#services-preview-'+index).src = path;
+        byQS('#services-image-path-'+index).value = path;
+      }
+      else if (scope === 'services-doc') {
+        const input = byQS('.doc-input[data-scope="services-doc"][data-index="'+index+'"]');
+        if (!input || !input.files[0]) return alert('Choose a document first');
+        const path = await uploadTo('/admin/upload-doc', input.files[0]);
+        byQS('#services-doc-path-'+index).value = path;
+      }
+      else if (scope === 'about-mission') {
+        const input = byQS('.file-input[data-scope="about-mission"]');
+        if (!input || !input.files[0]) return alert('Choose an image first');
+        const path = await uploadTo('/admin/upload-image', input.files[0]);
+        byQS('#about-mission-preview').src = path;
+        byQS('#about-mission-path').value = path;
+      }
+      else if (scope === 'about-staff') {
+        const input = byQS('.file-input[data-scope="about-staff"]');
+        if (!input || !input.files[0]) return alert('Choose an image first');
+        const path = await uploadTo('/admin/upload-image', input.files[0]);
+        byQS('#about-staff-preview').src = path;
+        byQS('#about-staff-path').value = path;
+      }
+      else if (scope === 'footer-logo') {
+        const input = byQS('.file-input[data-scope="footer-logo"]');
+        if (!input || !input.files[0]) return alert('Choose an image first');
+        const path = await uploadTo('/admin/upload-image', input.files[0]);
+        byQS('#footer-logo-preview').src = path;
+        byQS('#footer-logo-path').value = path;
+      }
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
+  });
+
+  // ---------- Dynamic Add/Remove ----------
+  // Home section (FIXED: interpolate ${i})
+  byQS('#add-home-section').addEventListener('click', () => {
+    const container = document.querySelector('#home-sections');
+    const i = container.querySelectorAll('[data-type="home-section"]').length;
+    container.insertAdjacentHTML('beforeend', `
+      <fieldset class="section-block" data-type="home-section" data-index="${i}">
+        <legend>Section ${i + 1}</legend>
+
+        <label>Title</label>
+        <input type="text" name="home[sections][${i}][title]" value="">
+
+        <label>Text</label>
+        <textarea name="home[sections][${i}][text]"></textarea>
+
+        <label>Background Image</label>
+        <div class="image-upload">
+          <img src="" alt="Section Image" class="preview-img" id="home-preview-${i}">
+          <input type="hidden" name="home[sections][${i}][image]" id="home-image-path-${i}" value="">
+          <input type="file" class="file-input" data-scope="home" data-index="${i}" accept="image/*">
+          <button type="button" class="upload-btn" data-scope="home" data-index="${i}">Upload</button>
+        </div>
+
+        <label>Button Text</label>
+        <input type="text" name="home[sections][${i}][buttonText]" value="">
+        <label>Button Link</label>
+        <input type="text" name="home[sections][${i}][buttonLink]" value="">
+        <label>Font Size</label>
+        <select name="home[sections][${i}][fontSize]">
+          <option value="small">Small</option>
+          <option value="normal" selected>Normal</option>
+          <option value="large">Large</option>
+        </select>
+        <button type="button" class="remove-block" data-action="remove-home" data-index="${i}">Remove Section</button>
+      </fieldset>
+    `);
+  });
+
+  // Services add (FIXED: interpolate ${i})
+  document.querySelector('#add-service').addEventListener('click', () => {
+    const container = document.querySelector('#services-gallery');
+    const i = container.querySelectorAll('.service-item').length;
+    container.insertAdjacentHTML('beforeend', `
+      <div class="service-item" data-scope="services" data-index="${i}">
+        <label>Title</label>
+        <input type="text" name="services[gallery][${i}][title]" value="">
+        <label>Teaser</label>
+        <input type="text" name="services[gallery][${i}][teaser]" value="">
+        <label>Description</label>
+        <textarea name="services[gallery][${i}][description]"></textarea>
+        <label>Image Alt</label>
+        <input type="text" name="services[gallery][${i}][alt]" value="">
+        <div class="image-upload">
+          <img src="" class="preview-img" id="services-preview-${i}" alt="">
+          <input type="hidden" name="services[gallery][${i}][image]" id="services-image-path-${i}" value="">
+          <input type="file" class="file-input" data-scope="services-image" data-index="${i}" accept="image/*">
+          <button type="button" class="upload-btn" data-scope="services-image" data-index="${i}">Upload Image</button>
+        </div>
+        <div class="file-upload">
+          <label>PDF/DOCX</label>
+          <input type="text" name="services[gallery][${i}][pdf]" id="services-doc-path-${i}" value="" placeholder="/docs/filename.pdf">
+          <input type="file" class="doc-input" data-scope="services-doc" data-index="${i}" accept=".pdf,.doc,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document">
+          <button type="button" class="upload-btn" data-scope="services-doc" data-index="${i}">Upload Doc</button>
+        </div>
+        <button type="button" class="remove-block" data-action="remove-service" data-index="${i}">Remove Service</button>
+        <hr>
+      </div>
+    `);
+  });
+
+  // Remove handlers (delegated)
+  document.addEventListener('click', (e) => {
+    const rm = e.target.closest('.remove-block');
+    if (!rm) return;
+    const action = rm.getAttribute('data-action');
+    const idx = rm.getAttribute('data-index');
+    if (action === 'remove-home') {
+      const fs = document.querySelector(`fieldset[data-type="home-section"][data-index="${idx}"]`);
+      if (fs) fs.remove();
+    } else if (action === 'remove-service') {
+      const item = document.querySelector(`.service-item[data-scope="services"][data-index="${idx}"]`);
+      if (item) item.remove();
+    }
+  });
+</script>
+<script>
+  (function () {
+    const panels = document.querySelectorAll('fieldset.section-block > legend');
+    panels.forEach(legend => {
+      const fs = legend.parentElement;
+      legend.tabIndex = 0;
+      legend.addEventListener('click', () => fs.classList.toggle('is-collapsed'));
+      legend.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); legend.click(); }
+      });
+    });
+    const blocks = document.querySelectorAll('fieldset.section-block');
+    blocks.forEach((b, i) => { if (i > 0) b.classList.add('is-collapsed'); });
+  })();
+</script>
+
+<%- include('../partials/footer') %>

@@ -1,0 +1,31 @@
+<%- include('../partials/header') %>
+
+<main>
+  <% if (content && content.sections && content.sections.length > 0) { %>
+    <% content.sections.forEach((section) => { %>
+      <section 
+        class="home-section font-<%= section.fontSize || 'normal' %>" 
+        style="background-image: url('<%= section.image %>');"
+      >
+        <div class="content">
+          <h2><%= section.title %></h2>
+          <p><%= section.text %></p>
+          <% if (section.buttonText && section.buttonLink) { %>
+            <a href="<%= section.buttonLink %>" class="home-btn">
+              <%= section.buttonText %>
+            </a>
+          <% } %>
+        </div>
+      </section>
+    <% }) %>
+  <% } else { %>
+    <p style="text-align:center;">Content not available.</p>
+  <% } %>
+</main>
+
+
+
+<%- include('../partials/footer') %>
+
+<!-- Scripts -->
+<script src="/js/home-fade.js"></script>

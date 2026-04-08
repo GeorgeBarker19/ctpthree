@@ -1,0 +1,64 @@
+{
+  "home": {
+    "sections": [
+      {
+        "title": "Welcome to My Care Site",
+        "text": "Providing compassionate, quality care for everyone.",
+        "image": "/images/home-bg1.jpg",
+        "buttonText": null,
+        "buttonLink": null
+      },
+      {
+        "title": "Learn More About Us",
+        "text": "We pride ourselves on delivering excellent care.",
+        "image": "/images/home-bg2.jpg",
+        "buttonText": "About Us",
+        "buttonLink": "/about"
+      },
+      {
+        "title": "Our Services",
+        "text": "Explore our full range of care services.",
+        "image": "/images/home-bg3.jpg",
+        "buttonText": null,
+        "buttonLink": null
+      },
+      {
+        "title": "Join Our Team",
+        "text": "We’re always looking for passionate carers.",
+        "image": "/images/home-bg4.jpg",
+        "buttonText": "Careers",
+        "buttonLink": "/careers"
+      },
+      {
+        "title": "Get in Touch",
+        "text": "We’d love to hear from you.",
+        "image": "/images/home-bg5.jpg",
+        "buttonText": "Contact",
+        "buttonLink": "/contact"
+      }
+    ]
+  },
+
+  "about": {
+    "title": "About My Care Site",
+    "text": "We are a dedicated team of caregivers committed to improving lives."
+  },
+
+  "services": {
+    "title": "Our Services",
+    "text": "From in-home care to assisted living — we provide the best support for every stage."
+  },
+
+  "careers": {
+    "title": "Join Our Team",
+    "text": "Submit your details and upload your CV to start your career with us."
+  },
+
+  "contact": {
+    "title": "Contact Us",
+    "text": "Reach out for any questions or support inquiries."
+  }
+}
+-bg.jpg"
+  }
+}
